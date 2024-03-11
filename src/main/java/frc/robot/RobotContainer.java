@@ -5,13 +5,12 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.commands.swerve.DriveSwerve;
-import frc.commands.swerve.ZeroHeading;
+import frc.robot.commands.swerve.DriveSwerve;
+import frc.robot.commands.swerve.ZeroHeading;
 import frc.robot.subsystems.SwerveDrive;
 import frc.robot.subsystems.SwerveModule;
 import frc.robot.subsystems.Gyro.Gyro;
