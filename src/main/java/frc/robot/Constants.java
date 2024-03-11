@@ -14,24 +14,24 @@ import lib.team3526.utils.SwerveChassis;
 import static edu.wpi.first.units.Units.*;
 
 public class Constants {
-    //! Logging options
+    //* Logging options
     public static final class Logging {
         public static final boolean kDebug = true;
     }
 
-    //! Swerve Drive
+    //* Swerve Drive
     public static final class SwerveDrive {
-        //! Gyroscope (Pigeon 2.0)
+        //* Gyroscope (Pigeon 2.0)
         public static final CTRECANDevice kGyroDevice = new CTRECANDevice(34, "*");
 
         public static final double kJoystickDeadband = 0.1;
-        //! Physical model of the robot
+        //* Physical model of the robot
         public static final class PhysicalModel {
-            //! MAX DISPLACEMENT SPEED (and acceleration)
+            //* MAX DISPLACEMENT SPEED (and acceleration)
             public static final Measure<Velocity<Distance>> kMaxSpeed = MetersPerSecond.of(5);
             public static final Measure<Velocity<Velocity<Distance>>> kMaxAcceleration = MetersPerSecond.per(Second).of(kMaxSpeed.in(MetersPerSecond));
 
-            //! MAX ROTATIONAL SPEED (and acceleration)
+            //* MAX ROTATIONAL SPEED (and acceleration)
             public static final Measure<Velocity<Angle>> kMaxAngularSpeed = DegreesPerSecond.of(360);
             public static final Measure<Velocity<Velocity<Angle>>> kMaxAngularAcceleration = DegreesPerSecond.per(Second).of(kMaxAngularSpeed.in(DegreesPerSecond));
 
@@ -64,15 +64,15 @@ public class Constants {
             public static final double kRobotMassKg = 46;
         }
 
-        //! Swerve modules configuration
+        //* Swerve modules configuration
         public static final class SwerveModules {
-            //! PID
+            //* PID
             public static final PIDFConstants kTurningPIDConstants = new PIDFConstants(0.5);
 
-            //! Global offset
+            //* Global offset
             public static final Measure<Angle> kGlobalOffset = Degrees.of(0);
 
-            //! Swerve modules options
+            //* Swerve modules options
             public static final SwerveModuleOptions kFrontLeftOptions = new SwerveModuleOptions()
                 .setAbsoluteEncoderInverted(false)
                 .setAbsoluteEncoderCANDevice(new CTRECANDevice(11, "*"))
@@ -102,7 +102,7 @@ public class Constants {
                 .setName("Back Right");
         }
 
-        //! AUTONOMOUS
+        //* AUTONOMOUS
         public static final class Autonomous {
             public static final PIDConstants kTranslatePIDConstants = new PIDConstants(5.0, 0.0, 0.0);
             public static final PIDConstants kRotatePIDConstants = new PIDConstants(5.0, 0.0, 0.0);

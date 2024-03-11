@@ -22,23 +22,23 @@ import static edu.wpi.first.units.Units.MetersPerSecond;
 import org.littletonrobotics.junction.Logger;
 
 public class SwerveDrive extends SubsystemBase {
-    //! Swerve modules
+    //* Swerve modules
     public final SwerveModule frontLeft;
     public final SwerveModule frontRight;
     public final SwerveModule backLeft;
     public final SwerveModule backRight;
 
-    //! Gyroscope
+    //* Gyroscope
     public final Gyro gyro;
 
-    //! Odometry
+    //* Odometry
     public final SwerveDriveOdometry odometry;
 
-    //! Speed stats
+    //* Speed stats
     private boolean drivingRobotRelative = false;
     private ChassisSpeeds speeds = new ChassisSpeeds();
 
-    //! Rotational inertia accumulator
+    //* Rotational inertia accumulator
     RotationalInertiaAccumulator rotationalInertiaAccumulator = new RotationalInertiaAccumulator(Constants.SwerveDrive.PhysicalModel.kRobotMassKg);
 
     /**
@@ -153,7 +153,7 @@ public class SwerveDrive extends SubsystemBase {
         if (this.drivingRobotRelative) return this.speeds;
         else return ChassisSpeeds.fromFieldRelativeSpeeds(speeds, getHeading());
 
-        //! NEW IMPLEMENTATION (RETURNS REAL SPEEDS FROM GYRO)
+        // TODO: NEW IMPLEMENTATION (RETURNS REAL SPEEDS FROM GYRO)
         // return new ChassisSpeeds(this.gyro.getVelocityX(), this.gyro.getVelocityY(), Math.toRadians(this.gyro.getYawVelocity()));
     }
 

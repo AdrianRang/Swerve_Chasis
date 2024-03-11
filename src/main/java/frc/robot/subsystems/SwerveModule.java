@@ -19,24 +19,24 @@ import static edu.wpi.first.units.Units.*;
 import org.littletonrobotics.junction.Logger;
 
 public class SwerveModule extends SubsystemBase {
-    //! Options for the module
+    //* Options for the module
     public final SwerveModuleOptions options;
 
-    //! Motors
+    //* Motors
     private final LazyCANSparkMax driveMotor;
     private final LazyCANSparkMax turningMotor;
 
-    //! Encoders
+    //* Encoders
     private final RelativeEncoder driveEncoder;
     private final RelativeEncoder turningEncoder;
 
-    //! PID Controller for turning
+    //* PID Controller for turning
     private final LazySparkPID turningPID;
 
-    //! Absolute encoder
+    //* Absolute encoder
     private final CANcoder absoluteEncoder;
 
-    //! Target state
+    //* Target state
     private SwerveModuleState targetState = new SwerveModuleState();
 
     /**
