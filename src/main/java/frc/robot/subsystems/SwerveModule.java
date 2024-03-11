@@ -20,7 +20,7 @@ import org.littletonrobotics.junction.Logger;
 
 public class SwerveModule extends SubsystemBase {
     //! Options for the module
-    private final SwerveModuleOptions options;
+    public final SwerveModuleOptions options;
 
     //! Motors
     private final LazyCANSparkMax driveMotor;

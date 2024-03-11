@@ -23,21 +23,20 @@ import org.littletonrobotics.junction.Logger;
 
 public class SwerveDrive extends SubsystemBase {
     //! Swerve modules
-    SwerveModule frontLeft;
-    SwerveModule frontRight;
-    SwerveModule backLeft;
-    SwerveModule backRight;
+    public final SwerveModule frontLeft;
+    public final SwerveModule frontRight;
+    public final SwerveModule backLeft;
+    public final SwerveModule backRight;
 
     //! Gyroscope
-    Gyro gyro;
+    public final Gyro gyro;
 
     //! Odometry
-    SwerveDriveOdometry odometry;
+    public final SwerveDriveOdometry odometry;
 
     //! Speed stats
-    boolean drivingRobotRelative = false;
-    ChassisSpeeds speeds = new ChassisSpeeds();
-    double headingTarget = 0;
+    private boolean drivingRobotRelative = false;
+    private ChassisSpeeds speeds = new ChassisSpeeds();
 
     //! Rotational inertia accumulator
     RotationalInertiaAccumulator rotationalInertiaAccumulator = new RotationalInertiaAccumulator(Constants.SwerveDrive.PhysicalModel.kRobotMassKg);
