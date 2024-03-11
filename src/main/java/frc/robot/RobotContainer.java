@@ -4,9 +4,12 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import frc.commands.swerve.DriveSwerve;
 import frc.commands.swerve.ZeroHeading;
 import frc.robot.subsystems.SwerveDrive;
@@ -28,11 +31,17 @@ public class RobotContainer {
   private final SwerveDrive m_swerveDrive;
   private final Gyro gyro;
 
+  SendableChooser<Command> autonomousChooser;
+
   public RobotContainer() {
     gyro = new Gyro(new GyroIOPigeon(Constants.SwerveDrive.kGyroDevice));
     m_swerveDrive = new SwerveDrive(frontLeft, frontRight, backLeft, backRight, gyro);
 
     SmartDashboard.putData(new ZeroHeading(m_swerveDrive));
+
+    SendableChooser<Command> autonomousChooser = AutoBuilder.buildAutoChooser();
+    SmartDashboard.putData("Autonomous", autonomousChooser);
+    this.autonomousChooser = autonomousChooser;
 
     configureBindings();
   }
@@ -50,6 +59,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return Commands.print("No autonomous command configured");
+    return this.autonomousChooser.getSelected();
   }
 }
