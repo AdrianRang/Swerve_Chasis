@@ -73,8 +73,8 @@ On initialization (line 46) we set all the variables and reset the encoders.
 
 We obtimize so the wheel takes the shortest path possible to the desired angle
 
-### [`SwerveDrive`](src/main/java/frc/robot/subsystems/SwerveDrive.java)
-
 > 0 degrees with speed of 1 is equal to 180 degrees with speed of -1
 
 ![example](Images/Optimization.png)
+
+### [`SwerveDrive`](src/main/java/frc/robot/subsystems/SwerveDrive.java)
