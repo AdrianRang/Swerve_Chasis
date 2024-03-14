@@ -150,8 +150,44 @@ and also sets `drivingRobotRelative` to false.
 
 ### [`Gyro`](src/main/java/frc/robot/subsystems/Gyro/GyroIOPigeon.java)
 
+> [!NOTE]
+> For the gyro we use an [interface](https://www.w3schools.com/java/java_interface.asp) we do this to make the gyro device changable in just one line of code, you have the subsystem that you use in code [`Gyro.java`](src/main/java/frc/robot/subsystems/Gyro/Gyro.java) and the interface [`GyroIO.java`](src/main/java/frc/robot/subsystems/Gyro/GyroIO.java) and the actual Devices are [`GyroIOPigeon`](src/main/java/frc/robot/subsystems/Gyro/GyroIOPigeon.java) for pigeon and [`GyroIONavX`](src/main/java/frc/robot/subsystems/Gyro/GyroIONavX.java) for the NavX. To instantiate a gyro you use:
+> ```
+> new Gyro(new GyroIOPigeon(kGyroDevice)); // pigeon
+> new Gyro(new GyroIONavx()) // NavX
+> ```
+
+For the gyroscope you only need the heading of the Robot
+
+
 ### [`DriveSwerve`](src/main/java/frc/robot/commands/swerve/DriveSwerve.java)
 
+`DriveSwerve` is the command used to drive. You pass you controller inputs as a `Suplier` this command only applies deadzone
+```
+x = Math.abs(x) < Constants.SwerveDrive.kJoystickDeadband ? 0 : x;
+y = Math.abs(y) < Constants.SwerveDrive.kJoystickDeadband ? 0 : y;
+rot = Math.abs(rot) < Constants.SwerveDrive.kJoystickDeadband ? 0 : rot;
+```
+applies the `SlewRateLimiter`
+```
+x = xLimiter.calculate(x);
+y = yLimiter.calculate(y);
+rot = rotLimiter.calculate(rot);
+```
+Scales it up to the robot speeds (controller is -1 to 1 robot is 5m/s max) so x speed of 1 in the controller is robot speed of 5 m/s
+```
+x *= Constants.SwerveDrive.PhysicalModel.kMaxSpeed.in(MetersPerSecond);
+y *= Constants.SwerveDrive.PhysicalModel.kMaxSpeed.in(MetersPerSecond);
+rot *= Constants.SwerveDrive.PhysicalModel.kMaxAngularSpeed.in(RadiansPerSecond);
+```
+and drives in either robot relative or field relative mode depending on an input in the controller
+```
+if (this.fieldRelative.get()) {
+    swerveDrive.driveFieldRelative(x, y, rot);
+} else {
+    swerveDrive.driveRobotRelative(x, y, rot);
+}
+```
 
 ## Autonomous
 
