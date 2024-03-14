@@ -1,6 +1,21 @@
 # Pure Swerve Chassis
 Code for making a swerve chassis move
 
+## Contents
+- [What is swerve drve](#what-is-swerve-drive-in-frc)
+- [How to program swerve](#how-to-program-swerve)  
+    - [Actual code](#lets-get-to-the-actual-code)
+        - [SwerveModule](#swervemodule)
+            - [Optimizing a state](#optimizing-a-state)
+        - [SwerveDrive](#swervedrive) 
+        - [Gyro](#gyro)
+        - [DriveSwerve](#driveswerve)
+    - [Autonomous](#autonomous)
+        - [Odometry](#odometry)
+        - [PathPLanner](#pathplanner)
+        - [Adding Auto to code](#adding-auto-to-code)
+- [Common problems](#common-problems)
+
 ## What is Swerve Drive in FRC
 Swerve drive is a holonomic driving system. Meaning it can move in x and y direction and turn at the same time. You can see an example [here](https://youtu.be/FLnUZBHBczM?si=fxpICCj0WZetGUga&t=17).
 
@@ -132,3 +147,18 @@ and also sets `drivingRobotRelative` to false.
 >         }
 >     );
 > ```
+
+### [`Gyro`](src/main/java/frc/robot/subsystems/Gyro/GyroIOPigeon.java)
+
+### [`DriveSwerve`](src/main/java/frc/robot/commands/swerve/DriveSwerve.java)
+
+
+## Autonomous
+
+### Odometry
+
+### PathPlanner
+
+### Adding Auto to code
+
+# Common Problems
