@@ -89,7 +89,7 @@ public class SwerveDrive extends SubsystemBase {
         AutoBuilder.configureHolonomic(
             this::getPose,
             this::resetOdometry,
-            this::getRobotRelativeChassisSpeeds,
+            this::geRelativeChassisSpeeds,
             this::driveRobotRelative,
             new HolonomicPathFollowerConfig(
                 Constants.SwerveDrive.Autonomous.kTranslatePIDConstants,
@@ -145,10 +145,10 @@ public class SwerveDrive extends SubsystemBase {
     }
 
     /**
-     * Get the current robot relative speed
+     * If the robot is driving robot relative it will return the speeds directly, otherwise it will return the speeds relative to the field
      * @return
      */
-    public ChassisSpeeds getRobotRelativeChassisSpeeds() {
+    public ChassisSpeeds geRelativeChassisSpeeds() {
         //! PAST IMPLEMENTATION (RETURNS SPEEDS DIRECTLY)
         if (this.drivingRobotRelative) return this.speeds;
         else return ChassisSpeeds.fromFieldRelativeSpeeds(speeds, getHeading());
@@ -326,7 +326,7 @@ public class SwerveDrive extends SubsystemBase {
         Logger.recordOutput("SwerveDrive/RobotPose", this.getPose());
 
         Logger.recordOutput("SwerveDrive/RobotRelative", this.drivingRobotRelative);
-        Logger.recordOutput("SwerveDrive/RobotSpeeds", this.getRobotRelativeChassisSpeeds());
+        Logger.recordOutput("SwerveDrive/RobotSpeeds", this.geRelativeChassisSpeeds());
         
         Logger.recordOutput("SwerveDrive/ModuleRealStates", this.getModuleRealStates());
         Logger.recordOutput("SwerveDrive/ModuleTargetStates", this.getModuleTargetStates());

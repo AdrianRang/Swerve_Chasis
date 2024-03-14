@@ -78,3 +78,57 @@ We obtimize so the wheel takes the shortest path possible to the desired angle
 ![example](Images/Optimization.png)
 
 ### [`SwerveDrive`](src/main/java/frc/robot/subsystems/SwerveDrive.java)
+
+`SwerveDrive` is initialized with the 4 `SwerveModules`, and the `Gyro` Subsystem.
+
+First we reset the gyroscope so the robot has the correct field relative heading using:
+```
+// Reset gyroscope
+this.gyro.reset();
+```
+
+The `zeroHeading()` function just resets the gyro using: 
+`gyro.reset();`
+
+`getRelativeChassisSpeeds()` will return the corresponding `ChassisSpeeds` if it is driving robot relative or not. We know this with the boolean `drivingRobotRelative`
+
+> [!IMPORTANT]
+> To get the module states from `ChassisSpeeds` we use 
+>```
+>SwerveModuleState[] m_moduleStates = Constants.SwerveDrive.PhysicalModel.kDriveKinematics.toSwerveModuleStates(speeds);
+> ```
+> For this we need `SwerveDriveKinematics` initialized in [`Constants`](#Constants)
+
+`setModuleStates()` sets the module states using a `SwerveModuleState` array.
+
+`drive()` sets the module states from chassis speeds
+
+For Driving we don't directly use `drive()` we use `driveFieldRelative()` or `driveRobotRelative()` depending how we need to drive, these functions also work by running them with three doubles instead of the chassis speeds.
+
+`driveRobotRelative()` uses `drive()` directly but sets the boolean `drivingRobotRelative` to true.z
+
+`driveFieldRelative()` uses `drive()` but passes field relative speeds using WPI: 
+```
+ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rotSpeed, getHeading())
+```
+and also sets `drivingRobotRelative` to false.
+
+`stop()` sets all the module speeds to 0
+
+`xFormation()` sets the wheels on an 'x' for a more efficient brake.
+
+> [!NOTE]
+> All autonomous related functions will be explained [later](#odometry)  
+> For example odometry:
+> ```
+> this.odometry = new SwerveDriveOdometry(
+>         Constants.SwerveDrive.PhysicalModel.kDriveKinematics,
+>         this.getHeading(),
+>         new SwerveModulePosition[]{
+>             frontLeft.getPosition(),
+>             frontRight.getPosition(),
+>             backLeft.getPosition(),
+>             backRight.getPosition()
+>         }
+>     );
+> ```
