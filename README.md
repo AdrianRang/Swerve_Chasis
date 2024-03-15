@@ -10,6 +10,11 @@ Code for making a swerve chassis move
         - [SwerveDrive](#swervedrive) 
         - [Gyro](#gyro)
         - [DriveSwerve](#driveswerve)
+        - [Contants](#constants)
+            - [Logging](#logging)
+            - [SwerveDrive](#swervedrive-1)
+                - [PhysicalModel](#physicalmodel)
+            - [SwerveModules](#swervemodule-1)
     - [Autonomous](#autonomous)
         - [Odometry](#odometry)
         - [PathPLanner](#pathplanner)
@@ -188,6 +193,13 @@ if (this.fieldRelative.get()) {
     swerveDrive.driveRobotRelative(x, y, rot);
 }
 ```
+
+<!-- TODO -->
+### Constants
+#### Logging
+#### SwerveDrive
+##### PhysicalModel
+#### SwerveModule
 
 ## Autonomous
 
