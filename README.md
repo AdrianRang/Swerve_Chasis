@@ -10,7 +10,7 @@ Code for making a swerve chassis move
         - [SwerveDrive](#swervedrive) 
         - [Gyro](#gyro)
         - [DriveSwerve](#driveswerve)
-        - [Contants](#constants)
+        - [Constants](#constants)
             - [Logging](#logging)
             - [SwerveDrive](#swervedrive-1)
                 - [PhysicalModel](#physicalmodel)
@@ -195,10 +195,18 @@ if (this.fieldRelative.get()) {
 ```
 
 <!-- TODO -->
-### Constants
+### [`Constants`](src/main/java/frc/robot/Constants.java)
+In Java, a `Constants` class is often used to store and organize various constant values that are used throughout the project. These are initialized as final.
+
 #### Logging
+The `Logging` class just contains a boolean that will activate debug logging
+
 #### SwerveDrive
+
+
 ##### PhysicalModel
+
+
 #### SwerveModule
 
 ## Autonomous
