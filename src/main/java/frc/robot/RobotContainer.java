@@ -20,7 +20,7 @@ import lib.team3526.driveControl.CustomController.CustomControllerType;
 
 public class RobotContainer {
 
-  private final CustomController m_driverControllerCustom = new CustomController(0, CustomControllerType.XBOX);
+  private final CustomController m_driverControllerCustom = new CustomController(0, CustomControllerType.PS5);
   
   private final SwerveModule frontLeft = new SwerveModule(Constants.SwerveDrive.SwerveModules.kFrontLeftOptions);
   private final SwerveModule frontRight = new SwerveModule(Constants.SwerveDrive.SwerveModules.kFrontRightOptions);

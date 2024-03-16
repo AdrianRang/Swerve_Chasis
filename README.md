@@ -188,9 +188,33 @@ The `Logging` class just contains a boolean that will activate debug logging
 ## Autonomous
 
 ### Odometry
+Odometry is the most important part of the SwerveDrive for autonomous driving.
+
+Swerve Drive Odometry uses the distance traveled and angle of each swerve module to determine the robot position on the field. It does this by calculating the forward kinematics of the chassis using the previously defined SwerveDriveKinematics:
+
+```java
+public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(SwerveChassis.sizeToModulePositions(kTrackWidth.in(Meters), kWheelBase.in(Meters)));
+```
+
+Module positions are determined by the function `SwerveChassis.sizeToModulePositions` which we wrote as part of our library, it uses WPILib's coordinate system along with the robot's width and length and returns 4 `Transform2d`s in the order: FL, FR, BL, BR
+![WPILib coordinate system for kinematics](https://docs.wpilib.org/en/stable/_images/kinematics.svg)
+
+WPILib coordinate system for kinematics
+
+The `SwerveDriveOdometry` is updated as such periodically
+```java
+this.odometry.update(getHeading(), getModulePositions());
+```
+
+the `getHeading()` method returns a Rotation2d with the current robot yaw
+the `getModulePositions()` returns an array of `SwerveModulePosition` with the position of each moduule in the same order passed to the `SwerveDriveKinematics`
+
+(We later transitioned to a `SwerveDrivePoseEstimator` which gives us a more accurate robot pose using vision with AprilTags)
 
 ### PathPlanner
+![](./Images/PathPlanner.png)
 
-### Adding Auto to code
+We use PathPlanner for autonomous paths, it is used as described in the PathPlannerLib docs: https://pathplanner.dev/pplib-getting-started.html
 
 # Common Problems
+WIP
