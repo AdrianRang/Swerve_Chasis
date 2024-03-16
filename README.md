@@ -43,7 +43,7 @@ Using the field relative speeds we calculate the rotation and speed (Swerve Modu
 And finally we need to set the mosules to their corresponding state
 
 > [!IMPORTANT]
-> WPILib does all this using the class `ChassisSpeeds`
+> WPILib lets us calculate this using `ChassisSpeeds` and `SwerveDriveKinematics`
 
 ![diagram](Images/SwerveDriveDiagram.png)
 <sup>Image retrieved from [FRC 0 to autnomous](https://youtu.be/0Xi9yb1IMyA?si=rVmkGVnW3SoixsAd)</sup>
@@ -60,38 +60,33 @@ The second one is [`SwerveDrive`](src/main/java/frc/robot/subsystems/SwerveDrive
 And the last one is [`Gyro`](src/main/java/frc/robot/subsystems/Gyro/GyroIOPigeon.java) that will give the rotation of the robot to `SwerveDrive` so it can calculate the field relative speed.
 
 > [!IMPORTANT]
-> We use an interface in case we need to switch to a navX instead of our Pigeon 2.0
+> Subsystems are implemented using the [Advantagekit](https://github.com/Mechanical-Advantage/AdvantageKit) framework, this way we can hot-swap different implementations of a subsystem
 
-And we only need one command, [`DriveSwerve`](src/main/java/frc/robot/commands/swerve/DriveSwerve.java) that will send the `xSpeed`, `ySpeed`, and `rotSpeed` to the `SwerveDrive` subsystem
-
-> [!NOTE]
-> [`ZeroHeading`](src/main/java/frc/robot/commands/swerve/ZeroHeading.java) is another command but it is only used to set the front of the robot, (the '0' value of the gyroscope)
+Our SwerveDrive subsystem is driven using one command: [`DriveSwerve`](src/main/java/frc/robot/commands/swerve/DriveSwerve.java) that will send the `xSpeed` (Left stick X), `ySpeed` (Left Stick Y), and `rotSpeed` (Right stick X) to the `SwerveDrive` subsystem
 
 ---
 
 #### [`SwerveModule`](src/main/java/frc/robot/subsystems/SwerveModule.java)
 
-The `SwerveModule` subsystem is initialized with a `SwerveModuleOptions`, this is a class of our oen making and is made to help by making Constants easier to read.
+The `SwerveModule` subsystem is initialized with a `SwerveModuleOptions` instance, in this class we can set the CAN IDs for all the motor controllers, absolute encoders (CANcoders) and set the name of the module
 
 [`SwerveModuleOptions`](src/main/java/lib/team3526/constants/SwerveModuleOptions.java) has 7 variables:
 
-- `absoluteEncoderInverted` ***boolean*** whether the absolute encoder is inverted
-- `driveMotorInverted` ***boolean*** whether the drive motor is inverted
-- `driveMotorInverted` ***boolean*** whether the turning motor is inverted
+- `absoluteEncoderCANDevice` ***CTRECANDevice*** the CAN ID and CAN bus for the CANcoder absolute encoder
 - `driveMotorID` ***int*** the CAN ID of the drive motor
 - `turningMotorID` ***int*** the CAN ID of the turn motor
 - `name` ***String*** the name of the module *ex: 'front left'*
 
 > [!IMPORTANT]
-> The turning motor encoder is set to the absolute oncoder's value on intialization, this is because that encoder is not absolute and will always be 0 at start up so you need help from the absolute encoder to know its real position
+> We use the NEO-integrated encoders for turning the wheel, the turning motor encoder is set to the absolute encoder's value on intialization since the NEO-integrated encoder is relative, not absolute
 
 On initialization (line 46) we set all the variables and reset the encoders. 
 
-`setTargetState()` will [optimize](#Optimizing-a-state) the state and set the speed and angle of the module. the angle is set using a `SparkMaxPIDController`
+`setTargetState()` will [optimize](#Optimizing-a-state) the state and set the speed and angle of the module. the angle is set using a `LazySparkPID`, a class we made for optimizing CAN bus utilization by not updating duplicate values
 
 ##### Optimizing a state
 
-We obtimize so the wheel takes the shortest path possible to the desired angle
+We optimize so the wheel takes the shortest path possible to the desired angle
 
 > 0 degrees with speed of 1 is equal to 180 degrees with speed of -1
 
@@ -125,7 +120,7 @@ The `zeroHeading()` function just resets the gyro using:
 
 For Driving we don't directly use `drive()` we use `driveFieldRelative()` or `driveRobotRelative()` depending how we need to drive, these functions also work by running them with three doubles instead of the chassis speeds.
 
-`driveRobotRelative()` uses `drive()` directly but sets the boolean `drivingRobotRelative` to true.z
+`driveRobotRelative()` uses `drive()` directly but sets the boolean `drivingRobotRelative` to true
 
 `driveFieldRelative()` uses `drive()` but passes field relative speeds using WPI: 
 ```
@@ -135,35 +130,16 @@ and also sets `drivingRobotRelative` to false.
 
 `stop()` sets all the module speeds to 0
 
-`xFormation()` sets the wheels on an 'x' for a more efficient brake.
-
-> [!NOTE]
-> All autonomous related functions will be explained [later](#odometry)  
-> For example odometry:
-> ```
-> this.odometry = new SwerveDriveOdometry(
->         Constants.SwerveDrive.PhysicalModel.kDriveKinematics,
->         this.getHeading(),
->         new SwerveModulePosition[]{
->             frontLeft.getPosition(),
->             frontRight.getPosition(),
->             backLeft.getPosition(),
->             backRight.getPosition()
->         }
->     );
-> ```
+`xFormation()` sets the wheels on an 'x' for a much harder to move position.
 
 ### [`Gyro`](src/main/java/frc/robot/subsystems/Gyro/GyroIOPigeon.java)
 
 > [!NOTE]
-> For the gyro we use an [interface](https://www.w3schools.com/java/java_interface.asp) we do this to make the gyro device changable in just one line of code, you have the subsystem that you use in code [`Gyro.java`](src/main/java/frc/robot/subsystems/Gyro/Gyro.java) and the interface [`GyroIO.java`](src/main/java/frc/robot/subsystems/Gyro/GyroIO.java) and the actual Devices are [`GyroIOPigeon`](src/main/java/frc/robot/subsystems/Gyro/GyroIOPigeon.java) for pigeon and [`GyroIONavX`](src/main/java/frc/robot/subsystems/Gyro/GyroIONavX.java) for the NavX. To instantiate a gyro you use:
+> For the gyro we use an AdvantageKit [IO Layer]([https://www.w3schools.com/java/java_interface.asp](https://github.com/Mechanical-Advantage/AdvantageKit/blob/main/docs/DATA-FLOW.md)) we do this to make the gyro device changable in just one line of code, you have the subsystem that you use in code [`Gyro.java`](src/main/java/frc/robot/subsystems/Gyro/Gyro.java) and the interface [`GyroIO.java`](src/main/java/frc/robot/subsystems/Gyro/GyroIO.java) and the actual Devices are [`GyroIOPigeon`](src/main/java/frc/robot/subsystems/Gyro/GyroIOPigeon.java) for pigeon and [`GyroIONavX`](src/main/java/frc/robot/subsystems/Gyro/GyroIONavX.java) for the NavX. To instantiate a gyro you use:
 > ```
 > new Gyro(new GyroIOPigeon(kGyroDevice)); // pigeon
 > new Gyro(new GyroIONavx()) // NavX
 > ```
-
-For the gyroscope you only need the heading of the Robot
-
 
 ### [`DriveSwerve`](src/main/java/frc/robot/commands/swerve/DriveSwerve.java)
 
