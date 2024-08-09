@@ -36,20 +36,20 @@ public class PhotonIO implements CameraIO {
         }
     }
 
-    public String GetCameraName() {
+    public String getCameraName() {
         return photonName;
     }
 
-    public Optional<Pose3d> GetEstimatedRobotPose3D() {
+    public Optional<Pose3d> getEstimatedRobotPose3D() {
         return latestEstimatPose3d;
     }
     
-    public Optional<Pose2d> GetEstimatedRobotPose2D() {
+    public Optional<Pose2d> getEstimatedRobotPose2D() {
         if (latestEstimatPose3d.isEmpty()) return Optional.empty();
         return Optional.of(latestEstimatPose3d.get().toPose2d());
     }
 
-    public Optional<Double> GetLatency() {
+    public Optional<Double> getLatency() {
         return Optional.of(cam.getLatestResult().getLatencyMillis());
     }
 }

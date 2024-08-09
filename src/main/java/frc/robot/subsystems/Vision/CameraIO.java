@@ -6,11 +6,11 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 
 public interface CameraIO {
-    public String GetCameraName();
-
     public default void periodic() {};
 
-    Optional<Pose3d> GetEstimatedRobotPose3D();
-    Optional<Pose2d> GetEstimatedRobotPose2D();
-    Optional<Double> GetLatency();
+    public String getCameraName();
+
+    Optional<Pose3d> getEstimatedRobotPose3D();
+    Optional<Pose2d> getEstimatedRobotPose2D();
+    Optional<Double> getLatency();
 }

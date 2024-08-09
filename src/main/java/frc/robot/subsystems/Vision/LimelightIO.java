@@ -22,21 +22,21 @@ public class LimelightIO implements CameraIO {
     latestEstimatPose3d = LimelightHelpers.getBotPose3d(limelightName);
   }
 
-  public String GetCameraName() {
+  public String getCameraName() {
     return limelightName;
   }
 
-  public Optional<Pose3d> GetEstimatedRobotPose3D() {
+  public Optional<Pose3d> getEstimatedRobotPose3D() {
     // TODO: Check if the pose is valid
     return Optional.of(latestEstimatPose3d);
   }
 
-  public Optional<Pose2d> GetEstimatedRobotPose2D() {
+  public Optional<Pose2d> getEstimatedRobotPose2D() {
     // TODO: Check if the pose is valid
     return Optional.of(latestEstimatPose3d.toPose2d());
   }
 
-  public Optional<Double> GetLatency() {
+  public Optional<Double> getLatency() {
     return Optional.ofNullable(LimelightHelpers.getLatency_Capture(limelightName));
   }
 }

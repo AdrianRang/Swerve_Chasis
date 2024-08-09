@@ -4,6 +4,7 @@ import com.pathplanner.lib.util.PIDConstants;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.units.Angle;
 import edu.wpi.first.units.Distance;
@@ -116,5 +117,7 @@ public class Constants {
     //* Field
     public static final class Field {
         public static final AprilTagFieldLayout aprilTagFieldLayout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
+        // TODO: Add the initial pose of the robot
+        public static final Pose2d initialPose = new Pose2d();
     }
 }

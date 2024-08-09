@@ -21,19 +21,19 @@ public class Camera extends SubsystemBase {
     cam.periodic();
   }
 
-  public String GetCameraName() {
-    return cam.GetCameraName();
+  public String getCameraName() {
+    return cam.getCameraName();
   }
 
-  public Pose3d GetEstimatedRobotPose3D() {
-    return cam.GetEstimatedRobotPose3D().orElse(null);
+  public Pose3d getEstimatedRobotPose3D() { //? Or change the return type to Optional<Pose3d> and return Optional.empty() instead of null
+    return cam.getEstimatedRobotPose3D().orElse(null);
   }
 
-  public Pose2d GetEstimatedRobotPose2D() {
-    return cam.GetEstimatedRobotPose2D().orElse(null);
+  public Pose2d getEstimatedRobotPose2D() { //? Or change the return type to Optional<Pose3d> and return Optional.empty() instead of null
+    return cam.getEstimatedRobotPose2D().orElse(null);
   }
 
-  public Double GetLatency() {
-    return cam.GetLatency().orElse(null);
+  public Double getLatency() { //? Or change the return type to Optional<Pose3d> and return Optional.empty() instead of null
+    return cam.getLatency().orElse(null);
   }
 }
