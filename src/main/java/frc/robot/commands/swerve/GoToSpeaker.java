@@ -37,6 +37,7 @@ public class GoToSpeaker extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    // https://github.com/TitaniumTitans/2024Crescendo/blob/526e6f69abb8501e16003e18f45b19bf95297557/src/main/java/frc/robot/commands/AlignmentDriveCommand.java#L57
     command = new PathfindHolonomic(
       Constants.Pathfinding.SpeakerPose,
       constraints,
