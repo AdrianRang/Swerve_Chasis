@@ -1,6 +1,10 @@
 package frc.robot;
 
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.ReplanningConfig;
+
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.units.Angle;
 import edu.wpi.first.units.Distance;
@@ -108,5 +112,22 @@ public class Constants {
             public static final PIDConstants kRotatePIDConstants = new PIDConstants(5.0, 0.0, 0.0);
             public static final Measure<Velocity<Distance>> kMaxSpeedMetersPerSecond = MetersPerSecond.of(1);
         }
+    }
+
+    //* Pathfinding
+    public static final class Pathfinding {
+        public static final Measure<Velocity<Distance>> kMaxSpeed = MetersPerSecond.of(1);
+        public static final Measure<Velocity<Velocity<Distance>>> kMaxAcceleration = MetersPerSecondPerSecond.of(1);
+        public static final Measure<Velocity<Angle>> kMaxAngularSpeed = RadiansPerSecond.of(1);
+        public static final double kMaxAngularAccelerationRPS2 = 1; // In Rad/s^2
+        public static final Pose2d SpeakerPose = new Pose2d();
+
+        public static final HolonomicPathFollowerConfig config = new HolonomicPathFollowerConfig(
+                Constants.SwerveDrive.Autonomous.kTranslatePIDConstants,
+                Constants.SwerveDrive.Autonomous.kRotatePIDConstants,
+                Constants.SwerveDrive.Autonomous.kMaxSpeedMetersPerSecond.in(MetersPerSecond),
+                Constants.SwerveDrive.PhysicalModel.kWheelBase.in(Meters) / 2,
+                new ReplanningConfig(true, true)
+        );
     }
 }

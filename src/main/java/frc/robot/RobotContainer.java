@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.swerve.DriveSwerve;
+import frc.robot.commands.swerve.GoToSpeaker;
 import frc.robot.commands.swerve.ZeroHeading;
 import frc.robot.subsystems.SwerveDrive;
 import frc.robot.subsystems.SwerveModule;
@@ -55,6 +56,7 @@ public class RobotContainer {
       )
     );
 
+    this.m_driverControllerCustom.leftButton().onTrue(new GoToSpeaker(this.m_swerveDrive));
   }
 
   public Command getAutonomousCommand() {

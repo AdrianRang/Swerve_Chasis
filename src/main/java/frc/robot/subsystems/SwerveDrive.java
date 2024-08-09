@@ -91,13 +91,7 @@ public class SwerveDrive extends SubsystemBase {
             this::resetOdometry,
             this::geRelativeChassisSpeeds,
             this::driveRobotRelative,
-            new HolonomicPathFollowerConfig(
-                Constants.SwerveDrive.Autonomous.kTranslatePIDConstants,
-                Constants.SwerveDrive.Autonomous.kRotatePIDConstants,
-                Constants.SwerveDrive.Autonomous.kMaxSpeedMetersPerSecond.in(MetersPerSecond),
-                Constants.SwerveDrive.PhysicalModel.kWheelBase.in(Meters) / 2,
-                new ReplanningConfig(true, true)
-            ),
+            Constants.Pathfinding.config,
             () -> {
                 if (DriverStation.getAlliance().isPresent()) return DriverStation.getAlliance().get() == Alliance.Red;
                 return false;

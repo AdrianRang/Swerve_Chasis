@@ -9,7 +9,9 @@ import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.urcl.URCL;
 import com.ctre.phoenix6.SignalLogger;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import com.pathplanner.lib.pathfinding.LocalADStar;
+import com.pathplanner.lib.pathfinding.Pathfinding;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -19,35 +21,9 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void robotInit() {
+    Pathfinding.setPathfinder(new LocalADStar());
+
     m_robotContainer = new RobotContainer();
-
-    //! ADVANTAGE KIT LOGGING
-    Logger.addDataReceiver(new NT4Publisher());
-    if (Constants.Logging.kDebug) Logger.registerURCL(URCL.startExternal());
-    Logger.start();
-
-    //! LOG METADATA
-    Logger.recordMetadata("ProjectName", BuildConstants.MAVEN_NAME);
-    Logger.recordMetadata("BuildDate", BuildConstants.BUILD_DATE);
-    Logger.recordMetadata("GitSHA", BuildConstants.GIT_SHA);
-    Logger.recordMetadata("GitDate", BuildConstants.GIT_DATE);
-    Logger.recordMetadata("GitBranch", BuildConstants.GIT_BRANCH);
-    switch(BuildConstants.DIRTY) {
-      case 0:
-        Logger.recordMetadata("GitDirty", "All changes committed");
-        break;
-      case 1:
-        Logger.recordMetadata("GitDirty", "Uncomitted changes");
-        break;
-      default:
-        Logger.recordMetadata("GitDirty", "Unknown");
-        break;
-    }
-
-    //! DISABLE EXTERNAL LOGGING
-    LiveWindow.disableAllTelemetry();
-    SignalLogger.enableAutoLogging(false);
-    SignalLogger.stop();
   }
 
   @Override
