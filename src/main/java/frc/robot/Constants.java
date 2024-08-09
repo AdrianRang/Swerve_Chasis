@@ -1,6 +1,9 @@
 package frc.robot;
 
 import com.pathplanner.lib.util.PIDConstants;
+
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.units.Angle;
 import edu.wpi.first.units.Distance;
@@ -108,5 +111,10 @@ public class Constants {
             public static final PIDConstants kRotatePIDConstants = new PIDConstants(5.0, 0.0, 0.0);
             public static final Measure<Velocity<Distance>> kMaxSpeedMetersPerSecond = MetersPerSecond.of(1);
         }
+
+    }
+    //* Field
+    public static final class Field {
+        public static final AprilTagFieldLayout aprilTagFieldLayout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
     }
 }
